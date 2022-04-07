@@ -51,16 +51,6 @@ const getLinks = (file , userPath) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
   //exporto las funciones que necesito
 exports. extensionValidate =  extensionValidate;
 exports. validateFile =  validateFile;

@@ -9,14 +9,11 @@ const readline = require('readline').createInterface({ //lee la terminal
 })
 
 
-readline.question(`Ingresa tu ruta: \n`, (path) => {
-  console.log(path)
-  userPath= path
 
-  if(functions.extensionValidate(userPath)){
-   functions.validateFile(userPath)
   }
   readline.close()
 })
 
+  }
+}
 
