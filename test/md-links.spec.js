@@ -1,4 +1,4 @@
-const functions = require('../functions.js')
+const functions = require('../index.js')
 const route1 = 'files/test.md';
 const route2 = 'files/test.txt';
 const route3 = 'lala';

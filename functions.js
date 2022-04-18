@@ -1,7 +1,8 @@
 const path = require('path');
 const { lstatSync, existsSync} = require('fs');
 const fs = require("fs") ;
-
+const  url  = require('url');
+const http = require('http');
 
 
 // Verificar que la ruta exista 
@@ -31,8 +32,7 @@ const readFile = (files) => {
     try {
         console.log("files", files)
         const data = fs.readFileSync(files, "utf8");
-        const arrayLinks= getLinks(data, files) 
-        return arrayLinks  
+        return data
     } 
 
     catch (e) {
@@ -42,27 +42,30 @@ const readFile = (files) => {
 
 //Función para buscar y extraer los links del documento
 const getLinks = (file, userPath) => {
-    const lines = file.split("\n"); //separa en lineas el documento
-    let arrayLinks = [];
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const regularEx = /\[([^\]]+)]\((https?:\/\/[^\s)]+)\)/g;
-        const links = line.matchAll(regularEx); 
-        const match = regularEx.test(line); // test para ver si lo que hace match es un link
-        if (match) {
-            for (const link of links) { 
-                const data = {
-                    text: link[1],
-                    href: link[2],
-                    file: userPath,
-                    line: i + 1,
-                };
-                arrayLinks.push(data); // se suma al arreglo de links
-            }
-            console.log(arrayLinks)
-        }
-    }
-    return arrayLinks;
+
+    return new Promise ((resolve) => {
+      const lines = file.split("\n"); //separa en lineas el documento
+      let arrayLinks = [];
+      for (let i = 0; i < lines.length; i++) {
+          const line = lines[i];
+          const regularEx = /\[([^\]]+)]\((https?:\/\/[^\s)]+)\)/g;
+          const links = line.matchAll(regularEx); 
+          const match = regularEx.test(line); // test para ver si lo que hace match es un link
+          if (match) {
+              for (const link of links) { 
+                  const data = {
+                      text: link[1],
+                      href: link[2],
+                      file: userPath,
+                      line: i + 1,
+                  };
+                  arrayLinks.push(data); // se suma al arreglo de links
+                  resolve(arrayLinks)
+                 
+              }
+          }
+      }
+    })
 
 };
 
@@ -78,14 +81,12 @@ function validateLinks(link) {
         const nuevaData = {
           linkname: link,
           Code: res.statusCode,
-          status: res.statusCode <= 399,
+          status: res.statusCode,
         };
-        // console.log(`statusCode: ${res.statusCode}`)
         resolve(nuevaData); 
       })
   
       req.on('error', (error) => {
-        // console.error(error);
         const newData = {
           linkname: link,
           status: false,
@@ -95,13 +96,7 @@ function validateLinks(link) {
       req.end()
     })
   }
-
-
-
-
-
-
-
+  
 
 
 
@@ -115,3 +110,4 @@ exports.extensionValidate = extensionValidate;
 exports.readFile = readFile;
 exports.getLinks = getLinks;
 exports.validateLinks = validateLinks;
+

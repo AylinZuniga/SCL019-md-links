@@ -6,7 +6,7 @@
 
 [Sitio oficial de GitHub Pages](https://pages.github.com/)
 
-[Behance](https://www.behance.net/error)
+[Behance](https://www.behanceeeeee.net/error)
 
-[Spotify](https://www.spotify.com/es/error/)
+[Spotify](https://www.spotiiiify.com/es/error/)
 
