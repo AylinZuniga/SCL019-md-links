@@ -107,14 +107,6 @@ function validateLinks(link) {
 
 
 
-
-
-
-
-
-
-
-
 //exporto las funciones que necesito
 exports.checkRoute = checkRoute;
 exports.absolutePath = absolutePath;
