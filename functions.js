@@ -72,7 +72,7 @@ const getLinks = (file, userPath) => {
 function validateLinks(link) {
     return new Promise((resolve) => {
       const options = {
-        method: 'HEAD',
+        method: 'GET',
         host: url.parse(link).host,
         port: 80,
         path: url.parse(link).pathname,
